@@ -44,17 +44,17 @@ export function Panel({
   bodyClassName?: string;
 }) {
   return (
-    <section className={cn("rounded-lg border border-border bg-card", className)}>
+    <section className={cn("card-surface rise overflow-hidden rounded-xl", className)}>
       {(title || actions) && (
-        <header className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
+        <header className="flex items-center justify-between gap-3 px-5 pt-4 pb-3">
           <div className="min-w-0">
-            {title && <h2 className="text-sm font-medium">{title}</h2>}
-            {description && <p className="text-xs text-muted-foreground">{description}</p>}
+            {title && <h2 className="text-[13px] font-medium tracking-[-0.01em]">{title}</h2>}
+            {description && <p className="mt-0.5 text-xs text-muted-foreground">{description}</p>}
           </div>
           {actions}
         </header>
       )}
-      <div className={cn("p-4", bodyClassName)}>{children}</div>
+      <div className={cn("px-5 pb-5", bodyClassName)}>{children}</div>
     </section>
   );
 }
@@ -71,12 +71,17 @@ export function Metric({
   hint?: string;
 }) {
   return (
-    <div className="bg-card px-4 py-4">
+    <div className="card-surface rise rounded-xl px-5 py-4">
       <div className="text-xs text-muted-foreground">{label}</div>
-      <div className="num mt-2 text-[26px] font-medium leading-none">{value}</div>
-      <div className="mt-2 flex items-center gap-2 text-xs">
+      <div className="num mt-3 text-[28px] font-medium leading-none tracking-[-0.03em]">{value}</div>
+      <div className="mt-3 flex h-5 items-center gap-2 text-xs">
         {typeof delta === "number" && (
-          <span className={cn("num", delta >= 0 ? "text-success" : "text-destructive")}>
+          <span
+            className={cn(
+              "num rounded-md px-1.5 py-0.5 text-[11px]",
+              delta >= 0 ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive",
+            )}
+          >
             {delta >= 0 ? "+" : ""}
             {delta}%
           </span>
@@ -89,11 +94,7 @@ export function Metric({
 
 export function MetricGrid({ children, cols = 4 }: { children: ReactNode; cols?: 2 | 3 | 4 | 5 }) {
   const map = { 2: "md:grid-cols-2", 3: "md:grid-cols-3", 4: "md:grid-cols-4", 5: "md:grid-cols-5" };
-  return (
-    <div className={cn("grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border", map[cols])}>
-      {children}
-    </div>
-  );
+  return <div className={cn("grid grid-cols-2 gap-3", map[cols])}>{children}</div>;
 }
 
 type Tone = "neutral" | "success" | "warning" | "danger" | "info";
@@ -150,15 +151,15 @@ export function Segmented<T extends string>({
   options: { value: T; label: string }[];
 }) {
   return (
-    <div className="inline-flex rounded-md border border-border bg-muted p-0.5">
+    <div className="inline-flex rounded-lg bg-muted p-0.5">
       {options.map((o) => (
         <button
           key={o.value}
           type="button"
           onClick={() => onChange(o.value)}
           className={cn(
-            "rounded px-2.5 py-1 text-xs font-medium transition-colors",
-            value === o.value ? "bg-card text-foreground shadow-sm" : "text-muted-foreground hover:text-foreground",
+            "press rounded-md px-3 py-1 text-xs font-medium",
+            value === o.value ? "bg-card text-foreground shadow-[var(--shadow-card)]" : "text-muted-foreground hover:text-foreground",
           )}
         >
           {o.label}
