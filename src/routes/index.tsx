@@ -26,21 +26,40 @@ const activity = Array.from({ length: 14 }, (_, i) => ({
   replies: [3, 2, 5, 4, 6, 3, 2, 7, 6, 8, 9, 5, 10, 12][i],
 }));
 
+type Range = "7" | "14";
+
+function ChartTip({ active, payload, label }: { active?: boolean; payload?: { dataKey: string; value: number; color: string }[]; label?: string }) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="rounded-lg border border-border bg-popover px-3 py-2 text-xs shadow-[var(--shadow-lift)]">
+      <div className="mb-1 text-muted-foreground">{label}</div>
+      {payload.map((p) => (
+        <div key={p.dataKey} className="flex items-center justify-between gap-6">
+          <span className="flex items-center gap-1.5 capitalize"><span className="h-1.5 w-1.5 rounded-full" style={{ background: p.color }} />{p.dataKey}</span>
+          <span className="num font-medium">{p.value}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function Overview() {
   const fn = useServerFn(getStats);
   const { data } = useQuery({ queryKey: ["stats"], queryFn: () => fn(), refetchInterval: 15000 });
   const s = data ?? { totalLeads: 0, newToday: 0, scanned: 0, duplicates: 0, withWebsite: 0, apiUsed: 0, apiRemaining: 50, apiLimit: 50 };
   const done = onboarding.filter((o) => o.done).length;
+  const [range, setRange] = useState<Range>("14");
+  const series = range === "7" ? activity.slice(-7) : activity;
 
   return (
     <Page wide>
       <PageHeader
         title="Good morning, Chidi"
-        description="Here is what moved across your workspace in the last 14 days."
+        description="Here is what moved across your workspace recently."
         actions={
           <>
-            <Button variant="outline" size="sm" asChild><Link to="/studio/ads">New ad</Link></Button>
-            <Button size="sm" asChild><Link to="/search">Find leads</Link></Button>
+            <Button variant="outline" size="sm" className="press" asChild><Link to="/studio/ads">New ad</Link></Button>
+            <Button size="sm" className="press" asChild><Link to="/search">Find leads</Link></Button>
           </>
         }
       />
@@ -53,38 +72,44 @@ function Overview() {
         <Metric label="Search quota" value={`${s.apiRemaining}/${s.apiLimit}`} hint="this hour" />
       </MetricGrid>
 
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-3">
         <Panel
           className="lg:col-span-2"
           title="Activity"
           description="Leads collected and replies received"
-          actions={<div className="flex gap-3 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-sm bg-chart-1" />Leads</span>
-            <span className="flex items-center gap-1.5"><span className="h-2 w-2 rounded-sm bg-chart-2" />Replies</span>
-          </div>}
+          actions={<Segmented value={range} onChange={setRange} options={[{ value: "7", label: "7D" }, { value: "14", label: "14D" }]} />}
         >
-          <div className="h-64">
+          <div className="mb-3 flex gap-4 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1.5"><span className="h-0.5 w-3 rounded-full bg-chart-1" />Leads</span>
+            <span className="flex items-center gap-1.5"><span className="h-0.5 w-3 rounded-full bg-chart-2" />Replies</span>
+          </div>
+          <div className="h-60">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={activity} margin={{ left: -20, right: 8, top: 8 }}>
-                <CartesianGrid vertical={false} stroke="var(--border)" />
-                <XAxis dataKey="d" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} />
+              <LineChart data={series} margin={{ left: -24, right: 4, top: 8 }}>
+                <CartesianGrid vertical={false} stroke="var(--border)" strokeDasharray="2 4" />
+                <XAxis dataKey="d" tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} minTickGap={24} />
                 <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "var(--muted-foreground)" }} />
-                <Tooltip contentStyle={{ background: "var(--popover)", border: "1px solid var(--border)", borderRadius: 6, fontSize: 12 }} />
-                <Area type="monotone" dataKey="leads" stroke="var(--chart-1)" strokeWidth={1.5} fill="var(--chart-1)" fillOpacity={0.08} />
-                <Area type="monotone" dataKey="replies" stroke="var(--chart-2)" strokeWidth={1.5} fill="transparent" />
-              </AreaChart>
+                <Tooltip content={<ChartTip />} cursor={{ stroke: "var(--muted-foreground)", strokeWidth: 1, strokeDasharray: "3 3" }} />
+                <Line type="monotone" dataKey="leads" stroke="var(--chart-1)" strokeWidth={1.5} dot={false} activeDot={{ r: 3, strokeWidth: 0 }} animationDuration={600} />
+                <Line type="monotone" dataKey="replies" stroke="var(--chart-2)" strokeWidth={1.5} dot={false} activeDot={{ r: 3, strokeWidth: 0 }} animationDuration={600} />
+              </LineChart>
             </ResponsiveContainer>
           </div>
         </Panel>
 
-        <Panel title="Get set up" description={`${done} of ${onboarding.length} complete`} bodyClassName="p-0">
-          <ul className="divide-y divide-border">
+        <Panel title="Get set up" description={`${done} of ${onboarding.length} complete`} bodyClassName="px-2 pb-2">
+          <div className="mx-3 mb-2 h-1 overflow-hidden rounded-full bg-muted">
+            <div className="h-full rounded-full bg-foreground transition-[width] duration-700" style={{ width: `${(done / onboarding.length) * 100}%` }} />
+          </div>
+          <ul>
             {onboarding.map((o) => (
-              <li key={o.label} className="flex items-center gap-3 px-4 py-3 text-sm">
-                <span className={`grid h-4 w-4 place-items-center rounded-full border ${o.done ? "border-foreground bg-foreground" : "border-border"}`}>
-                  {o.done && <span className="h-1.5 w-1.5 rounded-full bg-background" />}
+              <li key={o.label} className="flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-colors duration-150 hover:bg-muted/60">
+                <span className={`grid h-4 w-4 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${o.done ? "border-foreground bg-foreground" : "border-input"}`}>
+                  {o.done && (
+                    <svg viewBox="0 0 10 10" className="h-2.5 w-2.5 text-background"><path d="M2 5.2 4.1 7.2 8 3" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  )}
                 </span>
-                <span className={o.done ? "text-muted-foreground line-through" : ""}>{o.label}</span>
+                <span className={o.done ? "text-muted-foreground" : ""}>{o.label}</span>
               </li>
             ))}
           </ul>
