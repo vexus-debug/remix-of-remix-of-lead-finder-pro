@@ -9,66 +9,26 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as TeamRouteImport } from './routes/team'
-import { Route as SitesRouteImport } from './routes/sites'
-import { Route as SettingsRouteImport } from './routes/settings'
-import { Route as SearchRouteImport } from './routes/search'
-import { Route as ReachRouteImport } from './routes/reach'
-import { Route as PipelineRouteImport } from './routes/pipeline'
-import { Route as LeadsRouteImport } from './routes/leads'
-import { Route as InboxRouteImport } from './routes/inbox'
-import { Route as HistoryRouteImport } from './routes/history'
-import { Route as BillingRouteImport } from './routes/billing'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as StudioVideoRouteImport } from './routes/studio/video'
-import { Route as StudioSocialRouteImport } from './routes/studio/social'
-import { Route as StudioLibraryRouteImport } from './routes/studio/library'
-import { Route as StudioBrandRouteImport } from './routes/studio/brand'
+import { Route as BillingRouteImport } from './routes/billing'
+import { Route as HistoryRouteImport } from './routes/history'
+import { Route as InboxRouteImport } from './routes/inbox'
+import { Route as LeadsRouteImport } from './routes/leads'
+import { Route as PipelineRouteImport } from './routes/pipeline'
+import { Route as ReachRouteImport } from './routes/reach'
+import { Route as SearchRouteImport } from './routes/search'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as SitesRouteImport } from './routes/sites'
+import { Route as TeamRouteImport } from './routes/team'
 import { Route as StudioAdsRouteImport } from './routes/studio/ads'
+import { Route as StudioBrandRouteImport } from './routes/studio/brand'
+import { Route as StudioLibraryRouteImport } from './routes/studio/library'
+import { Route as StudioSocialRouteImport } from './routes/studio/social'
+import { Route as StudioVideoRouteImport } from './routes/studio/video'
 
-const TeamRoute = TeamRouteImport.update({
-  id: '/team',
-  path: '/team',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SitesRoute = SitesRouteImport.update({
-  id: '/sites',
-  path: '/sites',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SettingsRoute = SettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SearchRoute = SearchRouteImport.update({
-  id: '/search',
-  path: '/search',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ReachRoute = ReachRouteImport.update({
-  id: '/reach',
-  path: '/reach',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PipelineRoute = PipelineRouteImport.update({
-  id: '/pipeline',
-  path: '/pipeline',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LeadsRoute = LeadsRouteImport.update({
-  id: '/leads',
-  path: '/leads',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const InboxRoute = InboxRouteImport.update({
-  id: '/inbox',
-  path: '/inbox',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const HistoryRoute = HistoryRouteImport.update({
-  id: '/history',
-  path: '/history',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BillingRoute = BillingRouteImport.update({
@@ -76,24 +36,54 @@ const BillingRoute = BillingRouteImport.update({
   path: '/billing',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const HistoryRoute = HistoryRouteImport.update({
+  id: '/history',
+  path: '/history',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StudioVideoRoute = StudioVideoRouteImport.update({
-  id: '/studio/video',
-  path: '/studio/video',
+const InboxRoute = InboxRouteImport.update({
+  id: '/inbox',
+  path: '/inbox',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StudioSocialRoute = StudioSocialRouteImport.update({
-  id: '/studio/social',
-  path: '/studio/social',
+const LeadsRoute = LeadsRouteImport.update({
+  id: '/leads',
+  path: '/leads',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StudioLibraryRoute = StudioLibraryRouteImport.update({
-  id: '/studio/library',
-  path: '/studio/library',
+const PipelineRoute = PipelineRouteImport.update({
+  id: '/pipeline',
+  path: '/pipeline',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ReachRoute = ReachRouteImport.update({
+  id: '/reach',
+  path: '/reach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitesRoute = SitesRouteImport.update({
+  id: '/sites',
+  path: '/sites',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioAdsRoute = StudioAdsRouteImport.update({
+  id: '/studio/ads',
+  path: '/studio/ads',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StudioBrandRoute = StudioBrandRouteImport.update({
@@ -101,9 +91,19 @@ const StudioBrandRoute = StudioBrandRouteImport.update({
   path: '/studio/brand',
   getParentRoute: () => rootRouteImport,
 } as any)
-const StudioAdsRoute = StudioAdsRouteImport.update({
-  id: '/studio/ads',
-  path: '/studio/ads',
+const StudioLibraryRoute = StudioLibraryRouteImport.update({
+  id: '/studio/library',
+  path: '/studio/library',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioSocialRoute = StudioSocialRouteImport.update({
+  id: '/studio/social',
+  path: '/studio/social',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const StudioVideoRoute = StudioVideoRouteImport.update({
+  id: '/studio/video',
+  path: '/studio/video',
   getParentRoute: () => rootRouteImport,
 } as any)
 
@@ -240,67 +240,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/team': {
-      id: '/team'
-      path: '/team'
-      fullPath: '/team'
-      preLoaderRoute: typeof TeamRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/sites': {
-      id: '/sites'
-      path: '/sites'
-      fullPath: '/sites'
-      preLoaderRoute: typeof SitesRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/settings': {
-      id: '/settings'
-      path: '/settings'
-      fullPath: '/settings'
-      preLoaderRoute: typeof SettingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/search': {
-      id: '/search'
-      path: '/search'
-      fullPath: '/search'
-      preLoaderRoute: typeof SearchRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/reach': {
-      id: '/reach'
-      path: '/reach'
-      fullPath: '/reach'
-      preLoaderRoute: typeof ReachRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pipeline': {
-      id: '/pipeline'
-      path: '/pipeline'
-      fullPath: '/pipeline'
-      preLoaderRoute: typeof PipelineRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/leads': {
-      id: '/leads'
-      path: '/leads'
-      fullPath: '/leads'
-      preLoaderRoute: typeof LeadsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/inbox': {
-      id: '/inbox'
-      path: '/inbox'
-      fullPath: '/inbox'
-      preLoaderRoute: typeof InboxRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/history': {
-      id: '/history'
-      path: '/history'
-      fullPath: '/history'
-      preLoaderRoute: typeof HistoryRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/billing': {
@@ -310,32 +254,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BillingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+    '/history': {
+      id: '/history'
+      path: '/history'
+      fullPath: '/history'
+      preLoaderRoute: typeof HistoryRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/studio/video': {
-      id: '/studio/video'
-      path: '/studio/video'
-      fullPath: '/studio/video'
-      preLoaderRoute: typeof StudioVideoRouteImport
+    '/inbox': {
+      id: '/inbox'
+      path: '/inbox'
+      fullPath: '/inbox'
+      preLoaderRoute: typeof InboxRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/studio/social': {
-      id: '/studio/social'
-      path: '/studio/social'
-      fullPath: '/studio/social'
-      preLoaderRoute: typeof StudioSocialRouteImport
+    '/leads': {
+      id: '/leads'
+      path: '/leads'
+      fullPath: '/leads'
+      preLoaderRoute: typeof LeadsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/studio/library': {
-      id: '/studio/library'
-      path: '/studio/library'
-      fullPath: '/studio/library'
-      preLoaderRoute: typeof StudioLibraryRouteImport
+    '/pipeline': {
+      id: '/pipeline'
+      path: '/pipeline'
+      fullPath: '/pipeline'
+      preLoaderRoute: typeof PipelineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reach': {
+      id: '/reach'
+      path: '/reach'
+      fullPath: '/reach'
+      preLoaderRoute: typeof ReachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sites': {
+      id: '/sites'
+      path: '/sites'
+      fullPath: '/sites'
+      preLoaderRoute: typeof SitesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio/ads': {
+      id: '/studio/ads'
+      path: '/studio/ads'
+      fullPath: '/studio/ads'
+      preLoaderRoute: typeof StudioAdsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/studio/brand': {
@@ -345,11 +331,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StudioBrandRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/studio/ads': {
-      id: '/studio/ads'
-      path: '/studio/ads'
-      fullPath: '/studio/ads'
-      preLoaderRoute: typeof StudioAdsRouteImport
+    '/studio/library': {
+      id: '/studio/library'
+      path: '/studio/library'
+      fullPath: '/studio/library'
+      preLoaderRoute: typeof StudioLibraryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio/social': {
+      id: '/studio/social'
+      path: '/studio/social'
+      fullPath: '/studio/social'
+      preLoaderRoute: typeof StudioSocialRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/studio/video': {
+      id: '/studio/video'
+      path: '/studio/video'
+      fullPath: '/studio/video'
+      preLoaderRoute: typeof StudioVideoRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
