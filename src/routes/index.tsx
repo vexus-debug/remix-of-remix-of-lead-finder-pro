@@ -1,11 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
 import { useQuery } from "@tanstack/react-query";
-import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
+import { useState } from "react";
+import { Line, LineChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 import { getStats } from "@/lib/leads.functions";
 import { Button } from "@/components/ui/button";
-import { Metric, MetricGrid, Page, PageHeader, Panel, Status } from "@/components/kit";
+import { Metric, MetricGrid, Page, PageHeader, Panel, Segmented, Status } from "@/components/kit";
 import { ledger, onboarding, sequences, threads, wallet } from "@/lib/mock";
 
 export const Route = createFileRoute("/")({
@@ -116,11 +117,11 @@ function Overview() {
         </Panel>
       </div>
 
-      <div className="grid gap-6 lg:grid-cols-3">
-        <Panel title="Sequences" actions={<Link to="/reach" className="text-xs text-muted-foreground hover:text-foreground">View all</Link>} bodyClassName="p-0">
-          <ul className="divide-y divide-border">
+      <div className="grid gap-4 lg:grid-cols-3">
+        <Panel title="Sequences" actions={<Link to="/reach" className="text-xs text-muted-foreground transition-colors hover:text-foreground">View all</Link>} bodyClassName="px-2 pb-2">
+          <ul>
             {sequences.slice(0, 3).map((q) => (
-              <li key={q.id} className="flex items-center justify-between gap-3 px-4 py-3">
+              <li key={q.id} className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 transition-colors duration-150 hover:bg-muted/60">
                 <div className="min-w-0">
                   <div className="truncate text-sm">{q.name}</div>
                   <div className="text-xs text-muted-foreground">{q.channel} · <span className="num">{q.enrolled}</span> enrolled</div>
@@ -130,10 +131,10 @@ function Overview() {
             ))}
           </ul>
         </Panel>
-        <Panel title="Latest replies" actions={<Link to="/inbox" className="text-xs text-muted-foreground hover:text-foreground">Open inbox</Link>} bodyClassName="p-0">
-          <ul className="divide-y divide-border">
+        <Panel title="Latest replies" actions={<Link to="/inbox" className="text-xs text-muted-foreground transition-colors hover:text-foreground">Open inbox</Link>} bodyClassName="px-2 pb-2">
+          <ul>
             {threads.slice(0, 3).map((t) => (
-              <li key={t.id} className="px-4 py-3">
+              <li key={t.id} className="rounded-lg px-3 py-2.5 transition-colors duration-150 hover:bg-muted/60">
                 <div className="flex items-center justify-between text-sm">
                   <span className="truncate font-medium">{t.name}</span>
                   <span className="text-xs text-muted-foreground">{t.time}</span>
@@ -143,10 +144,10 @@ function Overview() {
             ))}
           </ul>
         </Panel>
-        <Panel title="Credit usage" actions={<Link to="/billing" className="text-xs text-muted-foreground hover:text-foreground">Ledger</Link>} bodyClassName="p-0">
-          <ul className="divide-y divide-border">
+        <Panel title="Credit usage" actions={<Link to="/billing" className="text-xs text-muted-foreground transition-colors hover:text-foreground">Ledger</Link>} bodyClassName="px-2 pb-2">
+          <ul>
             {ledger.slice(0, 4).map((l) => (
-              <li key={l.id} className="flex items-center justify-between gap-3 px-4 py-3">
+              <li key={l.id} className="flex items-center justify-between gap-3 rounded-lg px-3 py-2.5 transition-colors duration-150 hover:bg-muted/60">
                 <div className="min-w-0">
                   <div className="truncate text-sm">{l.desc}</div>
                   <div className="text-xs text-muted-foreground">{l.date}</div>
